@@ -8,12 +8,7 @@ import { PermissionsAndroid } from 'react-native';
 const requestCameraPermission = async () => {
   try {
     const granted = await PermissionsAndroid.request(
-      PermissionsAndroid.PERMISSIONS.CAMERA,
-      {
-        title: 'Cool Photo App Camera Permission',
-        message:
-          'Cool Photo App needs access to your camera '
-      },
+      PermissionsAndroid.PERMISSIONS.CAMERA
     );
     if (granted === PermissionsAndroid.RESULTS.GRANTED) {
       console.log('You can use the camera');
@@ -27,25 +22,30 @@ const requestCameraPermission = async () => {
 function App() {
   const device = useCameraDevice('back')
   const [camerIsOpen, setCameraIsOpen] = useState(false)
-  // const [position, setPosition] = useState('back')
 
-  // const switchCameraPosition = () => {
-  //   const newPosition = device.position === 'front' ? 'back' : 'front'
-  //   setPosition(newPosition)
-  // }
+  // ! this would ask for permission immediately when the app starts
+  // useEffect(() => {
+  //   requestCameraPermission()
+  // }, [])
+  // ! this would ask for permission when the button is pressed
   const toggleCamera = () => {
-    setCameraIsOpen(!camerIsOpen)
+    PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.CAMERA).then((result) => {
+      if (result) {
+        setCameraIsOpen(!camerIsOpen)
+      } else {
+        requestCameraPermission()
+      }
+    }
+    )
   }
   return (
     <View>
-      <Button title={camerIsOpen? 'Close Camera': 'Open Camera'} onPress={toggleCamera}/>
+      <Button title={camerIsOpen ? 'Close Camera' : 'Open Camera'} onPress={toggleCamera} />
       <Camera
-      style={{ width: '100%', height: '100%', display: camerIsOpen ? 'block' : 'none' }}
-      device={device}
-      isActive={camerIsOpen}
-      // position={position}
-    />
-      {/* <Button title="Switch" onPress={switchCameraPosition}/> */}
+        style={{ width: '100%', height: '100%', display: camerIsOpen ? 'block' : 'none' }}
+        device={device}
+        isActive={camerIsOpen}
+      />
     </View>
   )
 }
