@@ -26,27 +26,34 @@ const requestCameraPermission = async () => {
 };
 function App() {
   const device = useCameraDevice('back')
+  const [camerIsOpen, setCameraIsOpen] = useState(false)
+  // const [position, setPosition] = useState('back')
 
+  // const switchCameraPosition = () => {
+  //   const newPosition = device.position === 'front' ? 'back' : 'front'
+  //   setPosition(newPosition)
+  // }
+  const toggleCamera = () => {
+    setCameraIsOpen(!camerIsOpen)
+  }
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <Button title="Request Camera Permission" onPress={requestCameraPermission} />
-      <StatusBar style="auto" />
+    <View>
+      <Button title={camerIsOpen? 'Close Camera': 'Open Camera'} onPress={toggleCamera}/>
       <Camera
-      style={StyleSheet.absoluteFill}
+      style={{ width: '100%', height: '100%', display: camerIsOpen ? 'block' : 'none' }}
       device={device}
-      isActive={true}
+      isActive={camerIsOpen}
+      // position={position}
     />
+      {/* <Button title="Switch" onPress={switchCameraPosition}/> */}
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    width: '100%',
+    height: '100%',
   },
 });
 export default App;
