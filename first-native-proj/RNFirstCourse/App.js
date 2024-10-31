@@ -1,15 +1,27 @@
 import { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
-import GoalItem from './components/GoalItem';
+import { Button, StyleSheet, View, StatusBar } from 'react-native';
+import GoalList from './components/GoalList';
 import GoalInput from './components/GoalInput';
 export default function App() {
   const [goals, setGoals] = useState([]);
-  
+  const [isVisible, setIsVisible] = useState(false);
+
+  const startAddGoalHandler = () => {
+    setIsVisible(true);
+  }
+
+
   return (
-    <View style={styles.appContainer}>
-      <GoalInput goals={goals} setGoals={setGoals}/>
-      <GoalItem goals={goals}/>
-    </View>
+    <>
+      <StatusBar barStyle="light" backgroundColor="#311b6b" />
+      <View style={styles.appContainer}>
+        <Button title='Add New Goal' onPress={startAddGoalHandler} color={"#a065ec"} />
+        {
+          isVisible && <GoalInput goals={goals} setGoals={setGoals} setIsVisible={setIsVisible} isVisible={isVisible} />
+        }
+        <GoalList goals={goals} setGoals={setGoals} />
+      </View>
+    </>
   );
 }
 
