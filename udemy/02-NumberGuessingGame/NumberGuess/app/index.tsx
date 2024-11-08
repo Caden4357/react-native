@@ -13,10 +13,13 @@ const StartPage = () => {
     setUserNumber(pickedNumber);
   }
 
+  const onGameOver = () => {
+    setGameOver(true);
+  }
   let screen = <StartGameScreen onPickNumber={pickedNumberHandler} />;
 
-  if (userNumber) {
-    screen = <GameScreen userNumber={userNumber} setUserNumber={setUserNumber}/>;
+  if (!gameOver && userNumber) {
+    screen = <GameScreen userNumber={userNumber} setUserNumber={setUserNumber} onGameOver={onGameOver} />;
   }
   if(gameOver){
     screen = <GameOver />;
@@ -30,7 +33,8 @@ const StartPage = () => {
         style={styles.rootScreen}
         imageStyle={styles.backgroundImage}
       >
-        <SafeAreaView style={styles.rootScreen}>
+        {/* use safeArea view to avoid natural divets and unique shapes of phones */}
+        <SafeAreaView style={styles.rootScreen}> 
           {screen}
         </SafeAreaView>
       </ImageBackground>

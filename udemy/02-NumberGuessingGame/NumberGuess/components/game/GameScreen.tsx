@@ -3,10 +3,13 @@ import { StyleSheet, View, Text, Alert} from 'react-native';
 import MainTitle from '../ui/MainTitle';
 import NumberOutputContainer from './NumberOutputContainer';
 import PrimaryButton from '../ui/PrimaryButton';
+import Card from '../ui/Card';
+import InstructionText from '../ui/InstructionText';
 
 interface GameScreenProps {
     userNumber: number;
     setUserNumber: (pickedNumber: number| null) => void;
+    onGameOver: () => void;
 }
 
 function generateRandomBetween(min: number, max: number, exclude: number) {
@@ -22,16 +25,17 @@ function generateRandomBetween(min: number, max: number, exclude: number) {
 
 let minBoundary = 1;
 let maxBoundary = 100;
-const GameScreen = ({ userNumber, setUserNumber}: GameScreenProps) => {
-    const initialGuess = generateRandomBetween(minBoundary, maxBoundary, userNumber);
+const GameScreen = ({ userNumber, setUserNumber, onGameOver}: GameScreenProps) => {
+    const initialGuess = generateRandomBetween(1, 100, userNumber);
     const [currentGuess, setCurrentGuess] = useState(initialGuess);
 
 
     useEffect(() => {
+        console.log('currentGuess', currentGuess);
         if(currentGuess == userNumber){
-            
+            onGameOver();
         }
-    }, []);
+    }, [currentGuess, userNumber, onGameOver]); // a good rule of thumb is to add all the dependencies that are used in the useEffect function
 
     const nextGuessHandler = (direction: 'lower' | 'greater') => {
         if((direction == 'lower' && currentGuess < userNumber) || (direction == 'greater' && currentGuess > userNumber)){
@@ -50,11 +54,11 @@ const GameScreen = ({ userNumber, setUserNumber}: GameScreenProps) => {
 
 
     return (
-        <View style={styles.screen}>
+        <Card>
             <MainTitle title='Opponents Guess' />
             <NumberOutputContainer>{currentGuess}</NumberOutputContainer>
             <View>
-                <Text>Higher OR Lower?</Text>
+                <InstructionText>Higher OR Lower?</InstructionText>
                 <View>
                     <PrimaryButton title="-" onPress={nextGuessHandler.bind(this, 'lower')} />
                 </View>
@@ -62,7 +66,7 @@ const GameScreen = ({ userNumber, setUserNumber}: GameScreenProps) => {
                     <PrimaryButton title="+" onPress={nextGuessHandler.bind(this, 'greater')} />
                 </View>
             </View>
-        </View>
+        </Card>
     );
 }
 
