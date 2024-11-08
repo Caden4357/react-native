@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { StyleSheet, View, Text, Alert} from 'react-native';
+import { StyleSheet, View, Text, Alert } from 'react-native';
 import MainTitle from '../ui/MainTitle';
 import NumberOutputContainer from './NumberOutputContainer';
 import PrimaryButton from '../ui/PrimaryButton';
@@ -8,7 +8,7 @@ import InstructionText from '../ui/InstructionText';
 
 interface GameScreenProps {
     userNumber: number;
-    setUserNumber: (pickedNumber: number| null) => void;
+    setUserNumber: (pickedNumber: number | null) => void;
     onGameOver: () => void;
 }
 
@@ -25,26 +25,26 @@ function generateRandomBetween(min: number, max: number, exclude: number) {
 
 let minBoundary = 1;
 let maxBoundary = 100;
-const GameScreen = ({ userNumber, setUserNumber, onGameOver}: GameScreenProps) => {
+const GameScreen = ({ userNumber, setUserNumber, onGameOver }: GameScreenProps) => {
     const initialGuess = generateRandomBetween(1, 100, userNumber);
     const [currentGuess, setCurrentGuess] = useState(initialGuess);
 
 
     useEffect(() => {
         console.log('currentGuess', currentGuess);
-        if(currentGuess == userNumber){
+        if (currentGuess == userNumber) {
             onGameOver();
         }
     }, [currentGuess, userNumber, onGameOver]); // a good rule of thumb is to add all the dependencies that are used in the useEffect function
 
     const nextGuessHandler = (direction: 'lower' | 'greater') => {
-        if((direction == 'lower' && currentGuess < userNumber) || (direction == 'greater' && currentGuess > userNumber)){
-            Alert.alert('Don\'t lie!', 'You know that this is wrong...', [{text: 'Sorry!', style: 'cancel'}]);
+        if ((direction == 'lower' && currentGuess < userNumber) || (direction == 'greater' && currentGuess > userNumber)) {
+            Alert.alert('Don\'t lie!', 'You know that this is wrong...', [{ text: 'Sorry!', style: 'cancel' }]);
             return;
         }
-        if(direction == 'lower'){
+        if (direction == 'lower') {
             maxBoundary = currentGuess;
-        }else{
+        } else {
             minBoundary = currentGuess + 1;
         }
         const newRndNum = generateRandomBetween(minBoundary, maxBoundary, currentGuess);
@@ -54,27 +54,28 @@ const GameScreen = ({ userNumber, setUserNumber, onGameOver}: GameScreenProps) =
 
 
     return (
-        <Card>
+        <View style={styles.screen}>
             <MainTitle title='Opponents Guess' />
             <NumberOutputContainer>{currentGuess}</NumberOutputContainer>
-            <View>
-                <InstructionText>Higher OR Lower?</InstructionText>
-                <View>
-                    <PrimaryButton title="-" onPress={nextGuessHandler.bind(this, 'lower')} />
+            <Card>
+                <InstructionText style={styles.instructionText}>Higher OR Lower?</InstructionText>
+                <View style={styles.buttonsContainer}>
+                    <View style={styles.buttonContainer}>
+                        <PrimaryButton title="-" onPress={nextGuessHandler.bind(this, 'lower')} />
+                    </View>
+                    <View style={styles.buttonContainer}>
+                        <PrimaryButton title="+" onPress={nextGuessHandler.bind(this, 'greater')} />
+                    </View>
                 </View>
-                <View>
-                    <PrimaryButton title="+" onPress={nextGuessHandler.bind(this, 'greater')} />
-                </View>
-            </View>
-        </Card>
+            </Card>
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
     screen: {
         flex: 1,
-        padding: 30,
-        alignItems: 'center',
+        paddingTop: 50,
     },
     title: {
         fontSize: 22,
@@ -85,6 +86,17 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         padding: 12,
         width: '100%',
+    },
+    instructionText: {
+        marginBottom: 12,
+    },
+    buttonsContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        gap: 16,
+    },
+    buttonContainer: {
+        flex: 1
     }
 })
 export default GameScreen;
