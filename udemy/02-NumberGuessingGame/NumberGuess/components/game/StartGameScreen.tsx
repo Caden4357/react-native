@@ -40,15 +40,17 @@ const StartGameScreen = ({ onPickNumber }: StartGameScreenProps) => {
                 <View style={styles.buttonsContainer}>
                     <View style={styles.buttonContainer}>
                         <PrimaryButton
-                            title="Confirm"
                             onPress={confirmNumberHandler}
-                        />
+                        >
+                            Confirm
+                        </PrimaryButton>
                     </View>
                     <View style={styles.buttonContainer}>
                         <PrimaryButton
-                            title="Reset"
                             onPress={resetInputHandler}
-                        />
+                        >
+                            Reset
+                        </PrimaryButton>
                     </View>
                 </View>
             </Card>
