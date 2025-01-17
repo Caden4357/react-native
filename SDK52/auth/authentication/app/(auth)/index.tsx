@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { StyleSheet, View, Text, TextInput, Pressable } from 'react-native';
+import { StyleSheet, View, Text, TextInput, Pressable, Alert } from 'react-native';
 import { Link } from 'expo-router';
 import { loginUser } from '@/util/auth';
 const login = () => {
@@ -7,9 +7,14 @@ const login = () => {
     const [password, setPassword] = useState('password123');
 
     const submitHandler = async () => {
-        console.log(email, password);
-        const result = await loginUser(email, password);
-        console.log(result);
+        try{
+            console.log(email, password);
+            const result = await loginUser(email, password);
+            console.log(result);
+        }
+        catch(err){
+            Alert.alert("Authentication failed","Couldnt register " + err.message);
+        }
     }
 
     return (

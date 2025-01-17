@@ -33,7 +33,7 @@ export async function loginUser(email, password){
         return result
     }
     catch(error){
-        console.log('ERROR: ',error.response);
-        return error
+        console.log('ERROR: ',error.response.data.error.message); 
+        throw new Error(error.response.data.error.message)
     }
 }
