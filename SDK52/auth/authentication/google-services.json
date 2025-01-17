@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "425621664166",
+    "project_id": "expo-auth-c3f59",
+    "storage_bucket": "expo-auth-c3f59.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:425621664166:android:0020d40a2fcf607b70df67",
+        "android_client_info": {
+          "package_name": "com.cadewil.firebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "425621664166-cmnna89146jcp4rsu8963n14qtjj28p8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cadewil.firebase",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "425621664166-gv4q43vdlnlncokjhdlfo0874quq1ktl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvneac5I2nSG-kpoug4a4zzDwhIWXCrzI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "425621664166-gv4q43vdlnlncokjhdlfo0874quq1ktl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

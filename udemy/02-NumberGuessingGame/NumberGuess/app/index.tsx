@@ -12,6 +12,11 @@ const StartPage = () => {
   function pickedNumberHandler(pickedNumber: number) {
     setUserNumber(pickedNumber);
   }
+  function resetGame() {
+    setUserNumber(null);
+    setGameRounds(0);
+    setGameOver(false);
+  }
 
   const onGameOver = () => {
     setGameOver(true);
@@ -22,7 +27,7 @@ const StartPage = () => {
     screen = <GameScreen userNumber={userNumber} setUserNumber={setUserNumber} onGameOver={onGameOver} />;
   }
   if(gameOver){
-    screen = <GameOver />;
+    screen = <GameOver resetGame={resetGame} />;
   }
 
   return (
