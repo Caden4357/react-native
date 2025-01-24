@@ -1,13 +1,10 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import { Stack } from 'expo-router';
+import { Slot, Stack } from 'expo-router';
+import { UserProvider } from '@/context/UserContext';
 const RootLayout = () => {
-    return (
-        <Stack>
-            <Stack.Screen name="(auth)" options={{headerShown:false}}/>
-        </Stack>
-    );
+    console.log('RootLayout');
+    <Slot />;
 }
-
 const styles = StyleSheet.create({})
 export default RootLayout;

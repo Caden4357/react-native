@@ -1,6 +1,7 @@
 import axios from 'axios'
 const API_KEY='AIzaSyCvneac5I2nSG-kpoug4a4zzDwhIWXCrzI'
-
+// ! Put this in a .env file and import it here
+// ! clean this up into one function with a parameter for the type of request
 export async function createUser(email, password){
     try{
         const result = await axios.post(

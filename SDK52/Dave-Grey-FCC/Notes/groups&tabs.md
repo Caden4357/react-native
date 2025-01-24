@@ -1,20 +1,7 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
-import { Platform } from 'react-native';
-
-import { HapticTab } from '@/components/HapticTab';
-import { IconSymbol } from '@/components/ui/IconSymbol';
-import TabBarBackground from '@/components/ui/TabBarBackground';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
-import Ionicons  from '@expo/vector-icons/Ionicons';
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
-  return (
-    <Tabs
-      screenOptions={{
-        // configre options directly on the screen here it will override the options set in index 
+## an example of a tab might look like this 
+```
+<Tabs
+    screenOptions={{        // configre options directly on the screen here it will override the options set in index 
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
         tabBarButton: HapticTab,
@@ -26,11 +13,12 @@ export default function TabLayout() {
           },
           default: {},
         }),
-      }}>
-      <Tabs.Screen
+      }}
+>
+<Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
+          title: 'Home', // name of component
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
         }}
       />
@@ -42,5 +30,17 @@ export default function TabLayout() {
         }}
       />
     </Tabs>
-  );
+``` 
+
+## A simple group could just look like this 
+```
+import { useState, useContext } from 'react';
+import { StyleSheet, View, Text } from 'react-native';
+import { Slot, Stack } from 'expo-router';
+import { UserProvider } from '@/context/UserContext';
+const RootLayout = () => {
+    console.log('RootLayout');
+    <Slot />;
 }
+
+```

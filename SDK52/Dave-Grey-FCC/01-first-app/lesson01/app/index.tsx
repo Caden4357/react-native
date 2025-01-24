@@ -9,7 +9,7 @@ const App = () => {
         style={styles.image}
       >
         <Text style={styles.headerText}>Coffee Shop</Text>
-        <Link style={{marginHorizontal:'auto'}} href="/contact" asChild>
+        <Link style={{marginHorizontal:'auto'}} href="/menu" asChild>
           <Pressable style={styles.bttn}>
             <Text style={styles.bttnText}>Contact Us</Text>
           </Pressable>

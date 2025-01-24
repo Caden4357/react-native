@@ -12,7 +12,7 @@ const login = () => {
             const result = await loginUser(email, password);
             console.log(result);
         }
-        catch(err){
+        catch(err:any){
             Alert.alert("Authentication failed","Couldnt register " + err.message);
         }
     }

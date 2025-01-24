@@ -20,7 +20,7 @@ const register = () => {
             }
             const result = await createUser(email, password)
         }
-        catch(err){
+        catch(err:any){
             console.log(err.message);
             Alert.alert("Authentication failed","Couldnt register " + err.message);
         }
