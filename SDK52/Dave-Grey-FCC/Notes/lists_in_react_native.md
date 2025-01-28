@@ -1,0 +1,2 @@
+# Use flat lists for rendering long lists of data it will only render whats on screen 
+# safe area view is to render content within the safe area boundaries of a device. which means padding is automatically applied to content to reflect the portion that is not covered by navigation bars, tab bars, toolbars, and other ancestor views

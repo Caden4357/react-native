@@ -11,6 +11,11 @@ const App = () => {
         <Text style={styles.headerText}>Coffee Shop</Text>
         <Link style={{marginHorizontal:'auto'}} href="/menu" asChild>
           <Pressable style={styles.bttn}>
+            <Text style={styles.bttnText}>Our Menu</Text>
+          </Pressable>
+        </Link>
+        <Link style={{marginHorizontal:'auto'}} href="/contact" asChild>
+          <Pressable style={styles.bttn}>
             <Text style={styles.bttnText}>Contact Us</Text>
           </Pressable>
         </Link>
@@ -51,10 +56,13 @@ const styles = StyleSheet.create({
   },
   bttn:{
     height:60,
+    width:150,
     borderRadius:20,
     backgroundColor:'rgba(0,0,0,0.75)',
     padding:6,
     justifyContent:'center',
+    marginBottom:50,
+
   },
   bttnText: {
     fontSize: 16,
