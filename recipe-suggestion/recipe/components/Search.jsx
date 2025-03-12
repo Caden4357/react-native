@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, TextInput } from 'react-native';
 import AntDesign from '@expo/vector-icons/AntDesign';
-const Search = (props) => {
+const Search = () => {
     const [search, setSearch] = useState('')
     console.log(search);
     return (

@@ -4,6 +4,7 @@ import { useSession } from '@/context/ctx';
 import Search from '@/components/Search';
 import { Colors } from '@/constants/Colors'
 import CuisineMenu from '@/components/CuisineMenu';
+import RecipeList from '@/components/RecipeList';
 
 export default function Index() {
     const colorScheme = Appearance.getColorScheme();
@@ -15,6 +16,7 @@ export default function Index() {
             <StatusBar style='light' />
             <Search />
             <CuisineMenu/>
+            <RecipeList/>
             <Pressable onPress={signOut}>
                 <Text>Sign Out</Text>
             </Pressable>
@@ -26,7 +28,8 @@ function createStyles(theme, colorScheme) {
         container:{
             flex:1,
             backgroundColor:theme.background,
-            paddingTop:50
+            paddingTop:50,
+            padding:10
         }
     })
 }
