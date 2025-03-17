@@ -18,7 +18,7 @@ export default function Index() {
             <CuisineMenu/>
             <RecipeList/>
             <Pressable onPress={signOut}>
-                <Text>Sign Out</Text>
+                <Text style={styles.signOutText}>Sign Out</Text>
             </Pressable>
         </View>
     );
@@ -30,6 +30,9 @@ function createStyles(theme, colorScheme) {
             backgroundColor:theme.background,
             paddingTop:50,
             padding:10
+        },
+        signOutText:{
+            color:theme.text
         }
     })
 }

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View, Text, FlatList, Appearance, StyleSheet } from 'react-native';
+import { View, Text, FlatList, Appearance, StyleSheet, Pressable, Alert } from 'react-native';
 import { cuisines } from '@/constants/Cuisines'
 import { Colors } from '@/constants/Colors'
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
@@ -10,12 +10,18 @@ const CuisineMenu = (props) => {
 
 
 
+    function getCuisine(cuisine){
+        Alert.alert(`You chose: ${cuisine}`)
+    }
     const Cuisine = ({ item }) => {
         return (
-            <View style={styles.list}>
-                <View style={styles.listImage}><FontAwesome6 name="bowl-food" size={24} /></View>
-                <Text style={styles.listText}>{item}</Text>
-            </View>
+            <Pressable onPress={() => getCuisine(item)}>
+                <View style={styles.list}>
+                    <View style={styles.listImage}><FontAwesome6 name="bowl-food" size={24} /></View>
+                    <Text style={styles.listText}>{item}</Text>
+                </View>
+            </Pressable>
+
         )
     }
 
@@ -39,7 +45,7 @@ function createStyles(theme, colorScheme) {
     return StyleSheet.create({
         list: {
             marginTop: 20,
-            alignItems:'center'
+            alignItems: 'center'
         },
         listImage: {
             backgroundColor: Colors.persimmon800,
@@ -47,10 +53,10 @@ function createStyles(theme, colorScheme) {
             padding: 20,
             margin: 10,
             borderRadius: 50,
-            alignItems:'center'
+            alignItems: 'center'
         },
-        listText:{
-            color:theme.text
+        listText: {
+            color: theme.text
         }
     })
 }

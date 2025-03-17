@@ -20,7 +20,7 @@ const RecipeList = () => {
 
     function viewRecipe(id) {
         if(!id) Alert.alert('something went wrong. Try again later');
-        // navigate to view/cook recipe page
+        // navigate to view/cook recipe page next
     }
 
     const FoodItem = ({ item }) => {
@@ -43,7 +43,6 @@ const RecipeList = () => {
     return (
         <View>
             <Text style={styles.title}>Popular Recipes</Text>
-            {/* Not working atm */}
             <FlatList
                 data={recipes}
                 keyExtractor={item => item.id}
