@@ -2,24 +2,33 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, Appearance, FlatList, Image, TouchableOpacity, Alert } from 'react-native';
 import { Colors } from '@/constants/Colors'
 import { getRandomRecipes } from '@/lib/recipes'
+import Loading from './Loading';
 const RecipeList = () => {
     const colorScheme = Appearance.getColorScheme();
     const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
-    const styles = createStyles(theme, colorScheme)
-    const [recipes, setRecipes] = useState([])
+    const styles = createStyles(theme, colorScheme);
+    const [recipes, setRecipes] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        // console.log('HERE');
+        setLoading(true);
         const getRecipes = async () => {
-            const data = await getRandomRecipes()
-            console.log(data.recipes[0].image);
-            setRecipes(data.recipes)
+            try {
+                const data = await getRandomRecipes()
+                console.log(data.recipes[0].image);
+                setRecipes(data.recipes);
+                setLoading(false)
+            }
+            catch (err) {
+                Alert.alert('There was an issue fetching recipes')
+                setLoading(false)
+            }
         }
-        getRecipes()
+        getRecipes();
     }, [])
 
     function viewRecipe(id) {
-        if(!id) Alert.alert('something went wrong. Try again later');
+        if (!id) Alert.alert('something went wrong. Try again later');
         // navigate to view/cook recipe page next
     }
 
@@ -40,9 +49,18 @@ const RecipeList = () => {
         )
     }
 
+    if (loading) {
+
+        return (
+            <View>
+                <Text style={styles.title}>Loading...</Text>
+            </View>
+        );
+    }
     return (
         <View>
             <Text style={styles.title}>Popular Recipes</Text>
+
             <FlatList
                 data={recipes}
                 keyExtractor={item => item.id}
@@ -50,7 +68,7 @@ const RecipeList = () => {
                 horizontal={true}
             />
         </View>
-    );
+    )
 }
 
 

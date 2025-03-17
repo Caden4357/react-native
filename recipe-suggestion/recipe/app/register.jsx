@@ -34,13 +34,13 @@ const register = () => {
         }
         catch (err) {
             console.log(err.message);
-            Alert.alert("Authentication failed", "Couldnt register " + err.message);
+            Alert.alert("Authentication failed", `Couldnt register ${err.message}`);
         }
     }
     return (
         <View style={styles.container}>
             <StatusBar style={theme.statusBarBackground} />
-            <Text style={styles.mainHeaderText}> <MaterialCommunityIcons name="chef-hat" size={32} color={'white'} /> SmartChef</Text>
+            <Text style={styles.mainHeaderText}> <MaterialCommunityIcons name="chef-hat" size={32} color={theme.oppColor} /> SmartChef</Text>
             <View style={styles.formContainer}>
                 <Text style={[styles.mainHeaderText, styles.loginHeaderText]}>Register</Text>
                 <TextInput

@@ -29,7 +29,7 @@ const login = () => {
     return (
         <View style={styles.container}>
             <StatusBar style={theme.statusBarBackground} />
-            <Text style={styles.mainHeaderText}> <MaterialCommunityIcons name="chef-hat" size={32} color={'white'} /> SmartChef</Text>
+            <Text style={styles.mainHeaderText}> <MaterialCommunityIcons name="chef-hat" size={32} color={theme.oppColor} /> SmartChef</Text>
             <View style={styles.formContainer}>
                 <Text style={[styles.mainHeaderText, styles.loginHeaderText]}>Welcome Back</Text>
                 <TextInput

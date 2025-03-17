@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, TextInput } from 'react-native';
+import { View, StyleSheet, TextInput, Appearance } from 'react-native';
 import AntDesign from '@expo/vector-icons/AntDesign';
+import { Colors } from '@/constants/Colors'
+
 const Search = () => {
+    const colorScheme = Appearance.getColorScheme();
+    const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
+    const styles = createStyles(theme, colorScheme)
     const [search, setSearch] = useState('')
     console.log(search);
     return (
@@ -10,7 +15,7 @@ const Search = () => {
                 <AntDesign name="search1" size={24} color="white" />
                 <TextInput
                     placeholder='Search Ingredients'
-                    placeholderTextColor={'white'}
+                    placeholderTextColor={theme.text}
                     onChangeText={(text) => setSearch(text)}
                     style={styles.searchText}
                 />
@@ -20,21 +25,23 @@ const Search = () => {
 }
 
 export default Search;
-const styles = StyleSheet.create({
-    searchContainer: {
-        flexDirection: 'row',
-        justifyContent: 'center'
-    },
-    searchBar: {
-        paddingLeft:12,
-        width: '80%',
-        borderRadius: 20,
-        borderWidth: 1,
-        borderColor: 'white',
-        flexDirection:'row',
-        alignItems:'center'
-    },
-    searchText:{
-        color:'white',
-    }
-})
+function createStyles(theme, colorScheme) {
+    return StyleSheet.create({
+        searchContainer: {
+            flexDirection: 'row',
+            justifyContent: 'center'
+        },
+        searchBar: {
+            paddingLeft: 12,
+            width: '80%',
+            borderRadius: 20,
+            borderWidth: 1,
+            borderColor: theme.oppColor,
+            flexDirection: 'row',
+            alignItems: 'center'
+        },
+        searchText: {
+            color: theme.text,
+        }
+    })
+}
