@@ -1,3 +1,5 @@
+import type { Theme } from '@/constants/Types';
+import type { Href } from 'expo-router';
 import { useState, useContext } from 'react';
 import { StyleSheet, View, Text, TextInput, Pressable, Alert, Appearance } from 'react-native';
 import { router, Link } from 'expo-router';
@@ -6,9 +8,8 @@ import { useSession } from '@/context/ctx';
 import { Colors } from '@/constants/Colors'
 import { StatusBar } from 'expo-status-bar';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-
 const register = () => {
-    const colorScheme = Appearance.getColorScheme();
+    const colorScheme = Appearance.getColorScheme() ?? 'dark';
     const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
     const styles = createStyles(theme, colorScheme)
     const [username, setUsername] = useState('');
@@ -28,18 +29,18 @@ const register = () => {
         }
         try {
             const result = await authorizeUser(email, password, username)
-            const accessToken = result.stsTokenManager.accessToken
-            signIn(accessToken);
-            router.replace('/')
+            if(result?.token){
+                signIn(result?.token);
+                router.replace("/" as Href)
+            }
         }
         catch (err) {
-            console.log(err.message);
-            Alert.alert("Authentication failed", `Couldnt register ${err.message}`);
+            Alert.alert("Authentication failed", "Couldnt register check your credentials and try again");
         }
     }
     return (
         <View style={styles.container}>
-            <StatusBar style={theme.statusBarBackground} />
+            <StatusBar style='auto' />
             <Text style={styles.mainHeaderText}> <MaterialCommunityIcons name="chef-hat" size={32} color={theme.oppColor} /> SmartChef</Text>
             <View style={styles.formContainer}>
                 <Text style={[styles.mainHeaderText, styles.loginHeaderText]}>Register</Text>
@@ -79,13 +80,13 @@ const register = () => {
                 </Pressable>
             </View>
             <Text style={styles.linkText}>
-                Already have an account? <Link href="/" style={styles.link}>Login here</Link>
+                Already have an account? <Link href={"/" as Href} style={styles.link}>Login here</Link>
             </Text>
         </View>
     );
 }
 export default register;
-function createStyles(theme, colorScheme) {
+function createStyles(theme:Theme, colorScheme:string) {
 
 
     return StyleSheet.create({

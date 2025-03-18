@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { View, Text} from 'react-native';
 
-const Camera = (props) => {
+const Camera = () => {
     return (
         <View>
             <Text>Camera</Text>

@@ -5,9 +5,10 @@ import Search from '@/components/Search';
 import { Colors } from '@/constants/Colors'
 import CuisineMenu from '@/components/CuisineMenu';
 import RecipeList from '@/components/RecipeList';
+import type { Theme } from '@/constants/Types';
 
 export default function Index() {
-    const colorScheme = Appearance.getColorScheme();
+    const colorScheme = Appearance.getColorScheme() ?? 'dark';
     const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
     const styles = createStyles(theme, colorScheme)
     const { signOut } = useSession();
@@ -23,7 +24,7 @@ export default function Index() {
         </View>
     );
 }
-function createStyles(theme, colorScheme) {
+function createStyles(theme:Theme, colorScheme:string) {
     return StyleSheet.create({
         container:{
             flex:1,

@@ -5,7 +5,7 @@ export async function authorizeUser(email: string, password: string, username:st
         const userCredentials = await createUserWithEmailAndPassword(auth, email, password)
         const updatedUser = await updateProfile(userCredentials.user, {displayName:username})
         console.log(userCredentials.user);
-        return userCredentials.user
+        return userCredentials.user.getIdTokenResult()
     }
     catch(err){
         console.log(err);
@@ -15,7 +15,7 @@ export async function authorizeUser(email: string, password: string, username:st
 export async function loginUser(email:string, password:string){
     try{
         const userCredentials = await signInWithEmailAndPassword(auth, email, password)
-        return userCredentials.user
+        return userCredentials.user.getIdTokenResult()
     }
     catch(err){
         console.log(err);

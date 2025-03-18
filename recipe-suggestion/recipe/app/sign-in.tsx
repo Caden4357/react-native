@@ -1,3 +1,5 @@
+import type { Href } from 'expo-router';
+import type { Theme } from '@/constants/Types';
 import { useState } from 'react';
 import { StyleSheet, View, Text, TextInput, Pressable, Alert, Appearance } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
@@ -6,20 +8,23 @@ import { loginUser } from '@/util/auth';
 import { useSession } from '@/context/ctx';
 import { Colors } from '@/constants/Colors'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+
 const login = () => {
-    const colorScheme = Appearance.getColorScheme();
-    const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
+    const colorScheme:string = Appearance.getColorScheme() ?? 'dark';
+    const theme:Theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
     const styles = createStyles(theme, colorScheme)
     const { signIn } = useSession();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    console.log(theme);
+
     const submitHandler = async () => {
         try {
             const result = await loginUser(email, password); // call either signInWithPassword or signUp from firebase with email and password
-            console.log(result);
-            signIn(result.stsTokenManager.accessToken); // stores the idToken from firebase in session via context 
-            router.replace('/') // redirect to the root route session will be reevaluated and the app/(app)/index.tsx will render 
+            console.log('TOKEN: ', result);
+            if(result?.token){
+                signIn(result?.token); // stores the idToken from firebase in session via context 
+                router.replace("/" as Href) // redirect to the root route session will be reevaluated and the app/(app)/index.tsx will render 
+            }
         }
         catch (err) {
             Alert.alert("Authentication failed", "Couldnt register check your credentials and try again");
@@ -28,7 +33,7 @@ const login = () => {
 
     return (
         <View style={styles.container}>
-            <StatusBar style={theme.statusBarBackground} />
+            <StatusBar style='auto' />
             <Text style={styles.mainHeaderText}> <MaterialCommunityIcons name="chef-hat" size={32} color={theme.oppColor} /> SmartChef</Text>
             <View style={styles.formContainer}>
                 <Text style={[styles.mainHeaderText, styles.loginHeaderText]}>Welcome Back</Text>
@@ -52,20 +57,19 @@ const login = () => {
                     <Pressable style={[styles.bttnMain, styles.bttn]} onPress={submitHandler}>
                         <Text style={styles.bttnText}>Login</Text>
                     </Pressable>
-                    <Pressable style={[styles.bttnSecondary, styles.bttn]} onPress={() => Alert.alert('Sorry cant help you at the moment')}>
+                    <Pressable style={[styles.bttnSecondary, styles.bttn]} onPress={() => Alert.alert('Sorry cant help you at the moment. Coming soon!')}>
                         <Text style={[styles.bttnText, styles.secondaryBttnText]}>Forgot Password</Text>
                     </Pressable>
                 </View>
             </View>
             <Text style={styles.linkText}>
-                Don't have an account? <Link href="/register" style={styles.link}>Register here</Link>
+                Don't have an account? <Link href={"/register" as Href} style={styles.link}>Register here</Link>
             </Text>
         </View>
     );
 }
-function createStyles(theme, colorScheme) {
 
-
+function createStyles(theme:Theme, colorScheme:string) {
     return StyleSheet.create({
         container: {
             flex: 1,
