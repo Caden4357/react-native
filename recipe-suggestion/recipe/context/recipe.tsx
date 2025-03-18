@@ -28,36 +28,7 @@ import { useContext, createContext, type PropsWithChildren, useState } from 'rea
 // imageType:"jpg"
 // instructions:"Toast the sesame seeds, about 350 degrees in the oven for about 10-15 minutes. Keep an eye on them to make sure they don't burn.Mix together the following to make the dressing: olive oil, vinegar, sugar, salt, pepper, green onions, chicken flavor packet from the ramen noodle package.Crush the ramen noodles until there are no large chunks (small chunks are OK).Combine the shredded cabbage and ramen noodles in a large bowl.Pour the dressing on the cabbage/noodle mixture and toss to coat.Top with the toasted sesame seeds and almonds."
 
-type Recipe = {
-    vegetarian: boolean,
-    vegan: boolean,
-    glutenFree: boolean,
-    dairyFree: boolean,
-    veryHealthy: boolean,
-    cheap: boolean,
-    veryPopular: boolean,
-    sustainable: boolean,
-    weightWatcherSmartPoints: number,
-    gaps: string,
-    lowFodmap: boolean,
-    ketogenic: boolean,
-    whole30: boolean,
-    servings: number,
-    preparationMinutes: number,
-    cookingMinutes: number,
-    sourceUrl: string,
-    spoonacularSourceUrl: string,
-    aggregateLikes: number,
-    creditText: string,
-    sourceName: string,
-    extendedIngredients: string,
-    id: string,
-    title: string,
-    readyInMinutes: number,
-    image: string,
-    imageType: string,
-    instructions: string
-}
+import type { Recipe } from '@/constants/Types';
 
 const RecipeContext = createContext<{
     recipes: Recipe[],

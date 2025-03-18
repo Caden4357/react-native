@@ -9,3 +9,52 @@ export type Theme = {
     oppColor: string,
     statusBarBackground: string
 }
+
+export type Recipe = {
+    vegetarian: boolean,
+    vegan: boolean,
+    glutenFree: boolean,
+    dairyFree: boolean,
+    veryHealthy: boolean,
+    cheap: boolean,
+    veryPopular: boolean,
+    sustainable: boolean,
+    weightWatcherSmartPoints: number,
+    gaps: string,
+    lowFodmap: boolean,
+    ketogenic: boolean,
+    whole30: boolean,
+    servings: number,
+    preparationMinutes: number,
+    cookingMinutes: number,
+    sourceUrl: string,
+    spoonacularSourceUrl: string,
+    aggregateLikes: number,
+    creditText: string,
+    sourceName: string,
+    extendedIngredients: string | ExtendedIngredient[],
+    id: string,
+    title: string,
+    readyInMinutes: number,
+    image: string,
+    imageType: string,
+    instructions: string
+}
+
+
+// {"aisle": "Produce", "amount": 1, "consistency": "SOLID", "id": 10211821, "image": "bell-pepper-orange.png", 
+// "measures": [Object], "meta": [Array], "name": "bell pepper", "nameClean": "bell pepper", "original": "1 whole diced bell pepper (capsicum)", "originalName": "whole diced bell pepper (capsicum)", "unit": ""}
+export type ExtendedIngredient = {
+    aisle: string,
+    amount: number,
+    consistency: string,
+    id: number,
+    image: string,
+    measures: string,
+    meta: string[],
+    name: string,
+    nameClean: string,
+    original: string,
+    originalName: string,
+    unit: string
+}
