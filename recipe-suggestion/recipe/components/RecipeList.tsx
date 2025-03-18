@@ -3,11 +3,21 @@ import { StyleSheet, View, Text, Appearance, FlatList, Image, TouchableOpacity, 
 import { Colors } from '@/constants/Colors'
 import { getRandomRecipes } from '@/lib/recipes'
 import Loading from './Loading';
+import type { Theme } from '@/constants/Types';
+type Item = {
+    id: string,
+    title: string,
+    image: string
+}
+type FoodItem = {
+    item:Item
+}
+
 const RecipeList = () => {
-    const colorScheme = Appearance.getColorScheme();
+    const colorScheme = Appearance.getColorScheme() ?? 'dark';
     const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
     const styles = createStyles(theme, colorScheme);
-    const [recipes, setRecipes] = useState([]);
+    const [recipes, setRecipes] = useState<Item[]>([]);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -27,12 +37,12 @@ const RecipeList = () => {
         getRecipes();
     }, [])
 
-    function viewRecipe(id) {
+    function viewRecipe(id: string) {
         if (!id) Alert.alert('something went wrong. Try again later');
         // navigate to view/cook recipe page next
     }
 
-    const FoodItem = ({ item }) => {
+    const FoodItem = ({ item }: FoodItem) => {
         return (
             <TouchableOpacity onPress={() => viewRecipe(item.id)}>
                 <View style={styles.foodItemContainer}>
@@ -74,7 +84,7 @@ const RecipeList = () => {
 
 export default RecipeList;
 
-function createStyles(theme, colorScheme) {
+function createStyles(theme: Theme, colorScheme: string) {
     return StyleSheet.create({
         title: {
             color: theme.text,

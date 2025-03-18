@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { View, StyleSheet, TextInput, Appearance } from 'react-native';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { Colors } from '@/constants/Colors'
+import type { Theme } from '@/constants/Types';
 
 const Search = () => {
-    const colorScheme = Appearance.getColorScheme();
+    const colorScheme = Appearance.getColorScheme() ?? 'dark';
     const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
     const styles = createStyles(theme, colorScheme)
     const [search, setSearch] = useState('')
@@ -25,7 +26,7 @@ const Search = () => {
 }
 
 export default Search;
-function createStyles(theme, colorScheme) {
+function createStyles(theme: Theme, colorScheme: string) {
     return StyleSheet.create({
         searchContainer: {
             flexDirection: 'row',

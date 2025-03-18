@@ -3,17 +3,21 @@ import { View, Text, FlatList, Appearance, StyleSheet, Pressable, Alert } from '
 import { cuisines } from '@/constants/Cuisines'
 import { Colors } from '@/constants/Colors'
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
-const CuisineMenu = (props) => {
-    const colorScheme = Appearance.getColorScheme();
+import type { Theme } from '@/constants/Types';
+
+type Cuisines = {
+    item: string
+}
+
+const CuisineMenu = () => {
+    const colorScheme = Appearance.getColorScheme() ?? 'dark';
     const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
     const styles = createStyles(theme, colorScheme)
 
-
-
-    function getCuisine(cuisine){
+    function getCuisine(cuisine: string){
         Alert.alert(`You chose: ${cuisine}`)
     }
-    const Cuisine = ({ item }) => {
+    const Cuisine = ({ item }: Cuisines) => {
         return (
             <Pressable onPress={() => getCuisine(item)}>
                 <View style={styles.list}>
@@ -21,10 +25,8 @@ const CuisineMenu = (props) => {
                     <Text style={styles.listText}>{item}</Text>
                 </View>
             </Pressable>
-
         )
     }
-
 
     return (
         <View>
@@ -39,9 +41,8 @@ const CuisineMenu = (props) => {
 }
 
 export default CuisineMenu;
-function createStyles(theme, colorScheme) {
 
-
+function createStyles(theme:Theme, colorScheme: string) {
     return StyleSheet.create({
         list: {
             marginTop: 20,
