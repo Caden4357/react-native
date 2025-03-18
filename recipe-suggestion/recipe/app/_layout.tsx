@@ -1,11 +1,14 @@
-import { Slot } from 'expo-router';
-import { SessionProvider } from '@/context/ctx';
+import { Slot } from "expo-router";
+import { SessionProvider } from "@/context/ctx";
+import { RecipeProvider } from "@/context/recipe";
 
 export default function Root() {
-    // Set up the auth context and render our layout inside of it.
-    return (
-        <SessionProvider>
-            <Slot />
-        </SessionProvider>
-    );
+	// Set up the auth context and render our layout inside of it.
+	return (
+		<SessionProvider>
+			<RecipeProvider>
+				<Slot />
+			</RecipeProvider>
+		</SessionProvider>
+	);
 }

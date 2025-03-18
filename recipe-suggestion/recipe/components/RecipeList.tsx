@@ -1,9 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { StyleSheet, View, Text, Appearance, FlatList, Image, TouchableOpacity, Alert } from 'react-native';
 import { Colors } from '@/constants/Colors'
 import { getRandomRecipes } from '@/lib/recipes'
 import Loading from './Loading';
+import { useRecipes } from '@/context/recipe';
 import type { Theme } from '@/constants/Types';
+import { router } from 'expo-router';
+import type { Href } from 'expo-router';
+
 type Item = {
     id: string,
     title: string,
@@ -17,15 +21,13 @@ const RecipeList = () => {
     const colorScheme = Appearance.getColorScheme() ?? 'dark';
     const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
     const styles = createStyles(theme, colorScheme);
-    const [recipes, setRecipes] = useState<Item[]>([]);
-    const [loading, setLoading] = useState(false);
+    const { recipes, setRecipes, loading, setLoading } = useRecipes();
 
     useEffect(() => {
         setLoading(true);
         const getRecipes = async () => {
             try {
                 const data = await getRandomRecipes()
-                console.log(data.recipes[0].image);
                 setRecipes(data.recipes);
                 setLoading(false)
             }
@@ -35,11 +37,12 @@ const RecipeList = () => {
             }
         }
         getRecipes();
-    }, [])
+    }, [setRecipes, setLoading])
 
     function viewRecipe(id: string) {
         if (!id) Alert.alert('something went wrong. Try again later');
         // navigate to view/cook recipe page next
+        router.push(`/recipe/${id}` as Href);
     }
 
     const FoodItem = ({ item }: FoodItem) => {
