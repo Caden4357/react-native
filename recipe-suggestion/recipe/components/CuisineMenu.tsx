@@ -18,15 +18,10 @@ const CuisineMenu = () => {
     const {recipes, setRecipes } = useRecipes();
 
 
-    function lowercaseArray(array: string[]) {
-        return array.map(item => item.toLowerCase())
-    }
 
     async function getCuisine(cuisine: string){
         try{
-            setCuisines((prevState) => prevState.filter(c => c !== cuisine))
-            const data = await getRandomRecipes(lowercaseArray(cuisines));
-            console.log(cuisines);
+            const data = await getRandomRecipes(cuisine.toLowerCase());
             setRecipes(data.recipes)
         } catch (error){
             console.error(error)
