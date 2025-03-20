@@ -5,7 +5,7 @@ import Search from '@/components/Search';
 import { Colors } from '@/constants/Colors'
 import CuisineMenu from '@/components/CuisineMenu';
 import RecipeList from '@/components/RecipeList';
-import type { Theme } from '@/constants/Types';
+import type { ColorScheme, Theme } from '@/constants/Types';
 
 export default function Index() {
     const colorScheme = Appearance.getColorScheme() ?? 'dark';
@@ -24,7 +24,7 @@ export default function Index() {
         </View>
     );
 }
-function createStyles(theme:Theme, colorScheme:string) {
+function createStyles(theme:Theme, colorScheme:ColorScheme) {
     return StyleSheet.create({
         container:{
             flex:1,

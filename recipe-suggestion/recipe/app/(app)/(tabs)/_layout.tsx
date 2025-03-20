@@ -40,14 +40,6 @@ const TabLayout = () => {
 					),
 				}}
 			/>
-			<Tabs>
-				<Tabs.Screen
-					name="[id]"
-					options={{
-						href: null,
-					}}
-				/>
-			</Tabs>
 		</Tabs>
 	);
 };

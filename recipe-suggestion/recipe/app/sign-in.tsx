@@ -8,9 +8,10 @@ import { loginUser } from '@/util/auth';
 import { useSession } from '@/context/ctx';
 import { Colors } from '@/constants/Colors'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import type { ColorScheme } from '@/constants/Types';
 
 const login = () => {
-    const colorScheme:string = Appearance.getColorScheme() ?? 'dark';
+    const colorScheme:ColorScheme = Appearance.getColorScheme() ?? 'dark';
     const theme:Theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
     const styles = createStyles(theme, colorScheme)
     const { signIn } = useSession();
@@ -20,7 +21,6 @@ const login = () => {
     const submitHandler = async () => {
         try {
             const result = await loginUser(email, password); // call either signInWithPassword or signUp from firebase with email and password
-            console.log('TOKEN: ', result);
             if(result?.token){
                 signIn(result?.token); // stores the idToken from firebase in session via context 
                 router.replace("/" as Href) // redirect to the root route session will be reevaluated and the app/(app)/index.tsx will render 
@@ -69,7 +69,7 @@ const login = () => {
     );
 }
 
-function createStyles(theme:Theme, colorScheme:string) {
+function createStyles(theme:Theme, colorScheme:ColorScheme) {
     return StyleSheet.create({
         container: {
             flex: 1,

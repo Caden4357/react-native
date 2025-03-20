@@ -30,6 +30,7 @@ import { useContext, createContext, type PropsWithChildren, useState } from 'rea
 
 import type { Recipe } from '@/constants/Types';
 
+
 const RecipeContext = createContext<{
     recipes: Recipe[],
     setRecipes: (recipes: Recipe[]) => void,
@@ -50,7 +51,6 @@ export function useRecipes() {
             throw new Error('useRecipes must be wrapped in a <RecipeProvider />');
         }
     }
-    console.log(value);
     return value;
 }
 

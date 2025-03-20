@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text, Appearance } from 'react-native';
 import { Colors } from '@/constants/Colors'
-import type { Theme } from '@/constants/Types';
+import type { ColorScheme, Theme } from '@/constants/Types';
 
 const Loading = () => {
     const colorScheme = Appearance.getColorScheme() ?? 'dark';
@@ -13,7 +13,7 @@ const Loading = () => {
         </View>
     );
 }
-function createStyles(theme:Theme, colorScheme:string) {
+function createStyles(theme:Theme, colorScheme:ColorScheme) {
     return StyleSheet.create({
         loadingText: {
             color: theme.text,

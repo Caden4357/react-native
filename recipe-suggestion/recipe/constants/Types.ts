@@ -1,3 +1,5 @@
+export type ColorScheme = 'light' | 'dark'
+
 export type Theme = {
     text: string,
     background: string,
@@ -32,7 +34,7 @@ export type Recipe = {
     aggregateLikes: number,
     creditText: string,
     sourceName: string,
-    extendedIngredients: string | ExtendedIngredient[],
+    extendedIngredients: ExtendedIngredient[],
     id: string,
     title: string,
     readyInMinutes: number,
@@ -42,8 +44,6 @@ export type Recipe = {
 }
 
 
-// {"aisle": "Produce", "amount": 1, "consistency": "SOLID", "id": 10211821, "image": "bell-pepper-orange.png", 
-// "measures": [Object], "meta": [Array], "name": "bell pepper", "nameClean": "bell pepper", "original": "1 whole diced bell pepper (capsicum)", "originalName": "whole diced bell pepper (capsicum)", "unit": ""}
 export type ExtendedIngredient = {
     aisle: string,
     amount: number,
@@ -58,3 +58,4 @@ export type ExtendedIngredient = {
     originalName: string,
     unit: string
 }
+

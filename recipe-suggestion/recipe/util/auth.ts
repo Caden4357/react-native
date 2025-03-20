@@ -4,11 +4,13 @@ export async function authorizeUser(email: string, password: string, username:st
     try{
         const userCredentials = await createUserWithEmailAndPassword(auth, email, password)
         const updatedUser = await updateProfile(userCredentials.user, {displayName:username})
-        console.log(userCredentials.user);
         return userCredentials.user.getIdTokenResult()
     }
-    catch(err){
-        console.log(err);
+    catch(error:unknown){
+        if (error instanceof Error) {
+			throw new Error(error.message);
+		}
+		throw new Error("An unknown error occurred");
     }
 }
 
@@ -17,7 +19,10 @@ export async function loginUser(email:string, password:string){
         const userCredentials = await signInWithEmailAndPassword(auth, email, password)
         return userCredentials.user.getIdTokenResult()
     }
-    catch(err){
-        console.log(err);
+    catch(error:unknown){
+        if (error instanceof Error) {
+			throw new Error(error.message);
+		}
+		throw new Error("An unknown error occurred");
     }
 }

@@ -1,4 +1,4 @@
-import type { ExtendedIngredient, Theme } from "@/constants/Types";
+import type { ColorScheme, ExtendedIngredient, Theme } from "@/constants/Types";
 import type { Recipe } from "@/constants/Types";
 
 import { useEffect, useState, useContext } from "react";
@@ -16,6 +16,7 @@ import { Colors } from "@/constants/Colors";
 import { getRecipe } from "@/lib/recipes";
 import RenderHtml from "react-native-render-html";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useWindowDimensions } from 'react-native';
 
 const tagStyles = {
 	// p: {
@@ -32,6 +33,7 @@ const tagStyles = {
 	// },
 	body: {
 		color: "yellow",
+
 	},
 };
 
@@ -40,6 +42,7 @@ type Ingredients = {
 };
 
 const CookRecipe = () => {
+	const { width } = useWindowDimensions();
 	const colorScheme = Appearance.getColorScheme() ?? "dark";
 	const theme = colorScheme === "dark" ? Colors.dark : Colors.light;
 	const styles = createStyles(theme, colorScheme);
@@ -69,31 +72,32 @@ const CookRecipe = () => {
 					style={{ width: 200, height: 200 }}
 				/>
 				<Text style={styles.mainText}>Cook {recipe?.title}</Text>
-				{recipe?.instructions && (
-					<RenderHtml
-						contentWidth={50}
-						source={{ html: recipe.instructions }}
-						tagsStyles={tagStyles}
-					/>
-				)}
+				<ScrollView>
+					{recipe?.instructions && (
+						<RenderHtml
+							contentWidth={width}
+							source={{ html: recipe.instructions }}
+							tagsStyles={tagStyles}
+						/>
+					)}
+				</ScrollView>
 				{recipe?.extendedIngredients && (
 					<FlatList
-						data={Array.isArray(recipe?.extendedIngredients) ? recipe.extendedIngredients : []}
+						data={recipe.extendedIngredients}
 						renderItem={({ item }: Ingredients) => (
 							<Text style={styles.ingredientText}> - {item.original}</Text>
 						)}
 						keyExtractor={(item) => item.id.toString()}
-						ItemSeparatorComponent={() => <View style={{marginBottom:20}} />}
-						ListFooterComponent={() => <View style={{marginBottom:20}} />}
+						ItemSeparatorComponent={() => <View style={{ marginBottom: 20 }} />}
+						ListFooterComponent={() => <View style={{ marginBottom: 20 }} />}
 					/>
 				)}
 			</View>
 		</SafeAreaView>
-
 	);
 };
 
-function createStyles(theme: Theme, colorScheme: "light" | "dark") {
+function createStyles(theme: Theme, colorScheme: ColorScheme) {
 	return StyleSheet.create({
 		container: {
 			minHeight: "100%",

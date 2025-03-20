@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { View, Text, FlatList, Appearance, StyleSheet, Pressable, Alert } from 'react-native';
-import { cuisines } from '@/constants/Cuisines'
+import { CuisinesList } from '@/constants/Cuisines'
 import { Colors } from '@/constants/Colors'
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
-import type { Theme } from '@/constants/Types';
-
+import type { ColorScheme, Theme } from '@/constants/Types';
+import { useRecipes } from '@/context/recipe';
+import { getRandomRecipes } from '@/lib/recipes';
 type Cuisines = {
     item: string
 }
@@ -13,10 +14,25 @@ const CuisineMenu = () => {
     const colorScheme = Appearance.getColorScheme() ?? 'dark';
     const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
     const styles = createStyles(theme, colorScheme)
+    const [cuisines, setCuisines] = useState<string[]>([])
+    const {recipes, setRecipes } = useRecipes();
 
-    function getCuisine(cuisine: string){
-        Alert.alert(`You chose: ${cuisine}`)
+
+    function lowercaseArray(array: string[]) {
+        return array.map(item => item.toLowerCase())
     }
+
+    async function getCuisine(cuisine: string){
+        try{
+            setCuisines((prevState) => prevState.filter(c => c !== cuisine))
+            const data = await getRandomRecipes(lowercaseArray(cuisines));
+            console.log(cuisines);
+            setRecipes(data.recipes)
+        } catch (error){
+            console.error(error)
+        }
+    }
+
     const Cuisine = ({ item }: Cuisines) => {
         return (
             <Pressable onPress={() => getCuisine(item)}>
@@ -31,7 +47,7 @@ const CuisineMenu = () => {
     return (
         <View>
             <FlatList
-                data={cuisines}
+                data={CuisinesList}
                 renderItem={({ item }) => <Cuisine item={item} />}
                 keyExtractor={item => item}
                 horizontal={true}
@@ -42,7 +58,7 @@ const CuisineMenu = () => {
 
 export default CuisineMenu;
 
-function createStyles(theme:Theme, colorScheme: string) {
+function createStyles(theme:Theme, colorScheme: ColorScheme) {
     return StyleSheet.create({
         list: {
             marginTop: 20,

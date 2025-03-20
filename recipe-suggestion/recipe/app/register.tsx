@@ -1,4 +1,4 @@
-import type { Theme } from '@/constants/Types';
+import type { ColorScheme, Theme } from '@/constants/Types';
 import type { Href } from 'expo-router';
 import { useState, useContext } from 'react';
 import { StyleSheet, View, Text, TextInput, Pressable, Alert, Appearance } from 'react-native';
@@ -86,7 +86,7 @@ const register = () => {
     );
 }
 export default register;
-function createStyles(theme:Theme, colorScheme:string) {
+function createStyles(theme:Theme, colorScheme:ColorScheme) {
 
 
     return StyleSheet.create({

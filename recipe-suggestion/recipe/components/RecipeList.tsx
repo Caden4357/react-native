@@ -1,12 +1,11 @@
-import React, { useEffect, useState, useContext } from 'react';
+import type { Href } from 'expo-router';
+import type { ColorScheme, Theme } from '@/constants/Types';
+import React, { useEffect } from 'react';
 import { StyleSheet, View, Text, Appearance, FlatList, Image, TouchableOpacity, Alert } from 'react-native';
 import { Colors } from '@/constants/Colors'
 import { getRandomRecipes } from '@/lib/recipes'
-import Loading from './Loading';
 import { useRecipes } from '@/context/recipe';
-import type { Theme } from '@/constants/Types';
 import { router } from 'expo-router';
-import type { Href } from 'expo-router';
 
 type Item = {
     id: string,
@@ -24,9 +23,9 @@ const RecipeList = () => {
     const { recipes, setRecipes, loading, setLoading } = useRecipes();
 
     useEffect(() => {
-        setLoading(true);
         const getRecipes = async () => {
             try {
+                setLoading(true);
                 const data = await getRandomRecipes()
                 setRecipes(data.recipes);
                 setLoading(false)
@@ -54,7 +53,6 @@ const RecipeList = () => {
                         source={{
                             uri: item.image
                         }}
-
                     />
                     <Text style={styles.foodItemText}>{item.title}</Text>
                 </View>
@@ -63,7 +61,6 @@ const RecipeList = () => {
     }
 
     if (loading) {
-
         return (
             <View>
                 <Text style={styles.title}>Loading...</Text>
@@ -73,7 +70,6 @@ const RecipeList = () => {
     return (
         <View>
             <Text style={styles.title}>Popular Recipes</Text>
-
             <FlatList
                 data={recipes}
                 keyExtractor={item => item.id}
@@ -87,7 +83,7 @@ const RecipeList = () => {
 
 export default RecipeList;
 
-function createStyles(theme: Theme, colorScheme: string) {
+function createStyles(theme: Theme, colorScheme: ColorScheme) {
     return StyleSheet.create({
         title: {
             color: theme.text,
