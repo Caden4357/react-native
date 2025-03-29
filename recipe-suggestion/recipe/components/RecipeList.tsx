@@ -5,16 +5,7 @@ import { StyleSheet, View, Text, Appearance, FlatList, Image, TouchableOpacity, 
 import { Colors } from '@/constants/Colors'
 import { getRandomRecipes } from '@/lib/recipes'
 import { useRecipes } from '@/context/recipe';
-import { router } from 'expo-router';
-
-type Item = {
-    id: string,
-    title: string,
-    image: string
-}
-type FoodItem = {
-    item:Item
-}
+import FoodItem from './FoodItem';
 
 const RecipeList = () => {
     const colorScheme = Appearance.getColorScheme() ?? 'dark';
@@ -27,6 +18,7 @@ const RecipeList = () => {
             try {
                 setLoading(true);
                 const data = await getRandomRecipes()
+                console.log(data.recipes);
                 setRecipes(data.recipes);
                 setLoading(false)
             }
@@ -37,28 +29,6 @@ const RecipeList = () => {
         }
         getRecipes();
     }, [setRecipes, setLoading])
-
-    function viewRecipe(id: string) {
-        if (!id) Alert.alert('something went wrong. Try again later');
-        // navigate to view/cook recipe page next
-        router.push(`/recipe/${id}` as Href);
-    }
-
-    const FoodItem = ({ item }: FoodItem) => {
-        return (
-            <TouchableOpacity onPress={() => viewRecipe(item.id)}>
-                <View style={styles.foodItemContainer}>
-                    <Image
-                        style={styles.image}
-                        source={{
-                            uri: item.image
-                        }}
-                    />
-                    <Text style={styles.foodItemText}>{item.title}</Text>
-                </View>
-            </TouchableOpacity>
-        )
-    }
 
     if (loading) {
         return (

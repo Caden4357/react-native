@@ -72,7 +72,7 @@ const CookRecipe = () => {
 					style={{ width: 200, height: 200 }}
 				/>
 				<Text style={styles.mainText}>Cook {recipe?.title}</Text>
-				<ScrollView>
+				<ScrollView style={{ width: "75%" }}>
 					{recipe?.instructions && (
 						<RenderHtml
 							contentWidth={width}
@@ -87,7 +87,7 @@ const CookRecipe = () => {
 						renderItem={({ item }: Ingredients) => (
 							<Text style={styles.ingredientText}> - {item.original}</Text>
 						)}
-						keyExtractor={(item) => item.id.toString()}
+						keyExtractor={(item) => item.id.toString().concat(item.name)}
 						ItemSeparatorComponent={() => <View style={{ marginBottom: 20 }} />}
 						ListFooterComponent={() => <View style={{ marginBottom: 20 }} />}
 					/>
