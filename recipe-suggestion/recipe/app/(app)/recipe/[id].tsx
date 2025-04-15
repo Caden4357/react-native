@@ -11,7 +11,7 @@ import {
 	ScrollView,
 	FlatList,
 } from "react-native";
-import { useLocalSearchParams, useNavigation } from "expo-router";
+import { Href, Link, useLocalSearchParams, useNavigation } from "expo-router";
 import { Colors } from "@/constants/Colors";
 import { getRecipe } from "@/lib/recipes";
 import RenderHtml from "react-native-render-html";
@@ -19,22 +19,21 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useWindowDimensions } from 'react-native';
 
 const tagStyles = {
-	// p: {
-	// 	color: 'red',
-	// },
-	// li:{
-	// 	color: 'blue',
-	// },
-	// ol:{
-	// 	color: 'green',
-	// },
-	// ul:{
-	// 	color: 'white',
-	// },
-	body: {
-		color: "yellow",
-
+	p: {
+		color: 'red',
 	},
+	li:{
+		color: 'blue',
+	},
+	ol:{
+		color: 'green',
+	},
+	ul:{
+		color: 'white',
+	},
+	// body: {
+	// 	color: "yellow",
+	// },
 };
 
 type Ingredients = {
@@ -74,11 +73,12 @@ const CookRecipe = () => {
 				<Text style={styles.mainText}>Cook {recipe?.title}</Text>
 				<ScrollView style={{ width: "75%" }}>
 					{recipe?.instructions && (
-						<RenderHtml
-							contentWidth={width}
-							source={{ html: recipe.instructions }}
-							tagsStyles={tagStyles}
-						/>
+						<Text>
+							<Link href={recipe?.sourceUrl as Href} style={{ color: theme.text }}>
+								{" "}
+								Click here to see the recipe
+							</Link>
+						</Text>
 					)}
 				</ScrollView>
 				{recipe?.extendedIngredients && (
