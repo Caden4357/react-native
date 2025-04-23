@@ -13,6 +13,8 @@
     "**/*.tsx",
     "**/*.jsx",
     ".expo/types/**/*.ts",
-    "expo-env.d.ts"
-, "constants/Colors.ts"  ]
+    "expo-env.d.ts",
+    "constants/Colors.ts",
+    "nativewind-env.d.ts"
+  ]
 }

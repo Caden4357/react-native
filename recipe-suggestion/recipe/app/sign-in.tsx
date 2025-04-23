@@ -8,7 +8,9 @@ import { loginUser } from '@/util/auth';
 import { useSession } from '@/context/ctx';
 import { Colors } from '@/constants/Colors'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import { useColorScheme } from 'nativewind';
 import type { ColorScheme } from '@/constants/Types';
+
 
 const login = () => {
     const colorScheme:ColorScheme = Appearance.getColorScheme() ?? 'dark';
@@ -34,7 +36,7 @@ const login = () => {
     return (
         <View style={styles.container}>
             <StatusBar style='auto' />
-            <Text style={styles.mainHeaderText}> <MaterialCommunityIcons name="chef-hat" size={32} color={theme.oppColor} /> SmartChef</Text>
+            <Text className='text-3xl text-red-800'> <MaterialCommunityIcons name="chef-hat" size={32} color={theme.oppColor} /> SmartChef</Text>
             <View style={styles.formContainer}>
                 <Text style={[styles.mainHeaderText, styles.loginHeaderText]}>Welcome Back</Text>
                 <TextInput
