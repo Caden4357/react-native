@@ -1,7 +1,7 @@
 import type { Href } from 'expo-router';
 import type { Theme } from '@/constants/Types';
-import { useState } from 'react';
-import { StyleSheet, View, Text, TextInput, Pressable, Alert, Appearance } from 'react-native';
+import { useEffect, useState } from 'react';
+import { StyleSheet, View, Text, TextInput, Pressable, Alert, Appearance, TouchableOpacity } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Link, router } from 'expo-router';
 import { loginUser } from '@/util/auth';
@@ -13,12 +13,15 @@ import type { ColorScheme } from '@/constants/Types';
 
 
 const login = () => {
-    const colorScheme:ColorScheme = Appearance.getColorScheme() ?? 'dark';
-    const theme:Theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
-    const styles = createStyles(theme, colorScheme)
+    const {colorScheme, toggleColorScheme} = useColorScheme()
     const { signIn } = useSession();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+
+    // useEffect(() => {
+
+    // }, [])
 
     const submitHandler = async () => {
         try {
@@ -34,105 +37,46 @@ const login = () => {
     }
 
     return (
-        <View style={styles.container}>
+        <View className='bg-slate-200 dark:bg-slate-900 flex-1 items-center pt-12'>
+            <TouchableOpacity onPress={toggleColorScheme}>
+                <Text className='dark:text-white'>{`Change theme to ${colorScheme === "dark"? "Light": "Dark"}`}</Text>
+            </TouchableOpacity>
             <StatusBar style='auto' />
-            <Text className='text-3xl text-red-800'> <MaterialCommunityIcons name="chef-hat" size={32} color={theme.oppColor} /> SmartChef</Text>
-            <View style={styles.formContainer}>
-                <Text style={[styles.mainHeaderText, styles.loginHeaderText]}>Welcome Back</Text>
+            <Text className='text-[32px] font-bold dark:text-white'> <MaterialCommunityIcons name="chef-hat" size={32} color={'#B52A01'} /> SmartChef</Text>
+            <View className='w-full justify-center items-center p-3'>
+                <Text className='text-[32px] font-bold mb-5 dark:text-white'>Welcome Back</Text>
                 <TextInput
                     placeholder="Email"
-                    placeholderTextColor={theme.text}
+                    placeholderTextColor={colorScheme === 'dark'? 'white': 'black'}
                     onChangeText={(text) => setEmail(text)}
                     value={email}
                     keyboardType='email-address'
-                    style={styles.formInput}
+                    className='border-2 rounded-xl border-solid w-full pl-3 mb-4 dark:border-white dark:text-white'
                 />
                 <TextInput
                     placeholder="Password"
-                    placeholderTextColor={theme.text}
+                    placeholderTextColor={colorScheme === 'dark'? 'white': 'black'}
                     onChangeText={(text) => setPassword(text)}
                     value={password}
                     secureTextEntry={true}
-                    style={styles.formInput}
+                    className='border-2 rounded-xl border-solid w-full pl-3 mb-3 dark:border-white dark:text-white'
                 />
-                <View style={styles.bttnContainer}>
-                    <Pressable style={[styles.bttnMain, styles.bttn]} onPress={submitHandler}>
-                        <Text style={styles.bttnText}>Login</Text>
+                
+                <View className='flex-row gap-2'>
+                    <Pressable className='p-3 border-2 dark:border-white rounded-xl w-2/4 items-center text-red-800' onPress={submitHandler}>
+                        <Text className='text-[16px] font-bold text-orange-400'>Login</Text>
                     </Pressable>
-                    <Pressable style={[styles.bttnSecondary, styles.bttn]} onPress={() => Alert.alert('Sorry cant help you at the moment. Coming soon!')}>
-                        <Text style={[styles.bttnText, styles.secondaryBttnText]}>Forgot Password</Text>
+                    <Pressable className='p-3 border-2 dark:border-red-400 rounded-xl w-2/4 items-center' onPress={() => Alert.alert('Sorry cant help you at the moment. Coming soon!')}>
+                        <Text className='text-[16px] font-bold text-red-400'>Forgot Password</Text>
                     </Pressable>
                 </View>
             </View>
-            <Text style={styles.linkText}>
-                Don't have an account? <Link href={"/register" as Href} style={styles.link}>Register here</Link>
+            
+            <Text className='dark:text-white'>
+                Don't have an account? <Link href={"/register" as Href} className='underline text-red-300'>Register here</Link>
             </Text>
         </View>
     );
 }
 
-function createStyles(theme:Theme, colorScheme:ColorScheme) {
-    return StyleSheet.create({
-        container: {
-            flex: 1,
-            alignItems: 'center',
-            paddingTop: 50,
-            backgroundColor: theme.background
-        },
-        mainHeaderText: {
-            fontSize: 32,
-            color: theme.text,
-            fontWeight: 'bold',
-        },
-        loginHeaderText: {
-            fontSize: 24,
-            marginBottom: 20,
-        },
-        formContainer: {
-            width: '100%',
-            justifyContent: 'center',
-            alignItems: 'center',
-            padding: 12
-        },
-        formInput: {
-            borderWidth: 1,
-            borderColor: theme.oppColor,
-            borderRadius: 10,
-            width: '100%',
-            marginBottom: 12,
-            paddingLeft: 12,
-            color: theme.text
-        },
-        bttnContainer: {
-            flexDirection: 'row',
-            gap: 6
-        },
-        bttnMain: {
-            backgroundColor: Colors.persimmon800,
-        },
-        bttnSecondary: {
-            backgroundColor: Colors.persimmon200,
-        },
-        bttn: {
-            padding: 10,
-            borderRadius: 15,
-            width: '50%',
-            alignItems: 'center'
-        },
-        bttnText: {
-            fontSize: 16,
-            fontWeight: 'bold'
-        },
-        secondaryBttnText: {
-            color: '#ED5E32'
-        },
-        linkText:{
-            color:theme.text
-        },
-        link:{
-            color:'#ED5E32',
-            textDecorationLine:'underline'
-        }
-    })
-}
 export default login;
