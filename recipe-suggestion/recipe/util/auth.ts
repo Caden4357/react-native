@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, getIdTokenResult, getAuth } from "firebase/auth";
 import {auth} from '@/firebaseConfig'
 export async function authorizeUser(email: string, password: string, username:string) {
     try{
@@ -24,5 +24,18 @@ export async function loginUser(email:string, password:string){
 			throw new Error(error.message);
 		}
 		throw new Error("An unknown error occurred");
+    }
+}
+
+export async function getCurrentUser() {
+    try{
+        const user = getAuth();
+        if(user){
+            return user.currentUser?.displayName
+        }
+        return 'User';
+    }
+    catch(err){
+        console.log('ERR Fetching User ', err);
     }
 }
